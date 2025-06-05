@@ -1,133 +1,54 @@
-# Breigh & Richtein Ltd.
+# React + TypeScript + Vite
 
-![GitHub last commit](https://img.shields.io/github/last-commit/BREIGH-RICHTEIN-Ltd/www)
-![GitHub issues](https://img.shields.io/github/issues/BREIGH-RICHTEIN-Ltd/www)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/BREIGH-RICHTEIN-Ltd/www)
-![License](https://img.shields.io/github/license/BREIGH-RICHTEIN-Ltd/www)
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Overview
+Currently, two official plugins are available:
 
-Breigh & Richtein Ltd. specializes in [brief description of services or products]. This repository contains [brief description of the repository's purpose].
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Technology Stack
+## Expanding the ESLint configuration
 
-The project utilizes the following technologies:
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-- **Frontend**:
-  - [HTML5](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
-  - [CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS)
-  - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+```js
+export default tseslint.config({
+  extends: [
+    // Remove ...tseslint.configs.recommended and replace with this
+    ...tseslint.configs.recommendedTypeChecked,
+    // Alternatively, use this for stricter rules
+    ...tseslint.configs.strictTypeChecked,
+    // Optionally, add this for stylistic rules
+    ...tseslint.configs.stylisticTypeChecked,
+  ],
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-- **Backend**:
-  - [Node.js](https://nodejs.org/)
-  - [Express.js](https://expressjs.com/)
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-- **Database**:
-  - [MongoDB](https://www.mongodb.com/)
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-- **Version Control**:
-  - [Git](https://git-scm.com/)
-  - [GitHub](https://github.com/)
-
-## Features
-
-- Feature 1: [Description]
-- Feature 2: [Description]
-- Feature 3: [Description]
-
-## Installation
-
-To set up the project locally:
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/BREIGH-RICHTEIN-Ltd/www.git
-   ```
-2. **Navigate to the project directory**:
-   ```bash
-   cd www
-   ```
-3. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-4. **Start the application**:
-   ```bash
-   npm start
-   ```
-
-## Usage
-
-Provide instructions and examples for using the application. Include screenshots as needed.
-
-## Contributing
-
-We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-## Contact
-
-For inquiries or support, please contact [Your Name](mailto:your.email@example.com).
-
-**Instructions for Customization:**
-
-1. **Badges**:
-   - The badges at the top provide quick insights into the repository's status. You can customize these badges using services like [Shields.io](https://shields.io/).
-
-2. **Technology Stack**:
-   - List the technologies used in your project, providing links to their official documentation for reference.
-
-3. **Features**:
-   - Highlight key features of your project to inform users about its capabilities.
-
-4. **Installation**:
-   - Provide clear, step-by-step instructions to help users set up the project locally.
-
-5. **Usage**:
-   - Offer guidance on how to use the application, including examples and screenshots.
-
-6. **Contributing**:
-   - Encourage community contributions by linking to your contribution guidelines.
-
-7. **License**:
-   - Specify the project's license to inform users of the terms under which the project can be used or modified.
-
-8. **Contact**:
-   - Provide contact information for users who may have questions or need support.
-
-**Adding Images:**
-
-To enhance your `README.md` with images:
-
-- **Uploading Images**:
-  - Upload your images to the repository (e.g., in an `assets` or `images` folder).
-  - Reference them in your `README.md` using relative paths:
-    ```markdown
-    ![Alt text](images/your-image.png)
-    ```
-    This method ensures that the images are part of your repository and reduces the risk of broken links.
-
-- **Sourcing Images from Online Commons**:
-  - Utilize images from platforms like [Unsplash](https://unsplash.com/) or [Pixabay](https://pixabay.com/) that offer free-to-use images.
-  - Ensure you comply with their licensing terms and provide appropriate attribution if required.
-
-**Incorporating Tables and Graphs:**
-
-To present data effectively:
-
-- **Tables**:
-  - Use Markdown's table syntax to organize information:
-    ```markdown
-    | Feature       | Description           |
-    |---------------|-----------------------|
-    | Feature 1     | Description of feature 1 |
-    | Feature 2     | Description of feature 2 |
-    ```
-    This structure helps in presenting data clearly and concisely.
-
-- **Graphs**:
-  - For complex data visualizations, consider creating graphs using tools like [Chart.js](https://www.chartjs.org/) or [D3.js](https://d3js.org/), and include them as images in your `README.md`.
-  - Ensure that the graphs are clear and add value to the documentation.
+export default tseslint.config({
+  plugins: {
+    // Add the react-x and react-dom plugins
+    'react-x': reactX,
+    'react-dom': reactDom,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended typescript rules
+    ...reactX.configs['recommended-typescript'].rules,
+    ...reactDom.configs.recommended.rules,
+  },
+})
+```
